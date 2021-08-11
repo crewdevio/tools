@@ -1,0 +1,10 @@
+# files
+.DS_Store
+
+# directories
+tmp/*
+.idea
+
+# exceptions
+!.gitkeep
+
