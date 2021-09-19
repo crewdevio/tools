@@ -140,13 +140,6 @@ export type {
 
 export * as Cache from "../cache/mod.ts";
 
-
-// export { Command } from "https://deno.land/x/cliffy@v0.19.2/command/mod.ts";
-// export type {
-//   IParseResult,
-//   ITypeInfo,
-// } from "https://deno.land/x/cliffy@v0.19.2/command/mod.ts";
-
 /**
  * esm.sh
  */
