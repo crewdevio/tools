@@ -1,14 +1,14 @@
 // Copyright 2018-2021 the Deno authors. All rights reserved. MIT license.
-import { BufReader, BufWriter } from "https://deno.land/std@0.107.0/io/bufio.ts";
-import { readLong, readShort, sliceLongToBytes } from "https://deno.land/std@0.107.0/io/ioutil.ts";
-import { crypto } from "https://deno.land/std@0.107.0/crypto/mod.ts";
-import * as base64 from "https://deno.land/std@0.107.0/encoding/base64.ts";
+import { BufReader, BufWriter } from "https://deno.land/std@0.108.0/io/bufio.ts";
+import { readLong, readShort, sliceLongToBytes } from "https://deno.land/std@0.108.0/io/ioutil.ts";
+import { crypto } from "https://deno.land/std@0.108.0/crypto/mod.ts";
+import * as base64 from "https://deno.land/std@0.108.0/encoding/base64.ts";
 
-import { writeResponse } from "https://deno.land/std@0.107.0/http/_io.ts";
-import { TextProtoReader } from "https://deno.land/std@0.107.0/textproto/mod.ts";
-import { Deferred, deferred } from "https://deno.land/std@0.107.0/async/deferred.ts";
-import { assert } from "https://deno.land/std@0.107.0/_util/assert.ts";
-import { concat } from "https://deno.land/std@0.107.0/bytes/mod.ts";
+import { writeResponse } from "https://deno.land/std@0.108.0/http/_io.ts";
+import { TextProtoReader } from "https://deno.land/std@0.108.0/textproto/mod.ts";
+import { Deferred, deferred } from "https://deno.land/std@0.108.0/async/deferred.ts";
+import { assert } from "https://deno.land/std@0.108.0/_util/assert.ts";
+import { concat } from "https://deno.land/std@0.108.0/bytes/mod.ts";
 
 const { hasOwn } = Object;
 export enum OpCode {
