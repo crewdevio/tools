@@ -1,13 +1,16 @@
 // Copyright 2018-2021 the Deno authors. All rights reserved. MIT license.
-import { BufReader, BufWriter } from "https://deno.land/std@0.108.0/io/bufio.ts";
+import {
+  BufReader,
+  BufWriter,
+} from "https://deno.land/std@0.113.0/io/buffer.ts";
 import {
   assert,
   assertEquals,
   assertRejects,
   fail,
-} from "https://deno.land/std@0.108.0/testing/asserts.ts";
-import { TextProtoReader } from "https://deno.land/std@0.108.0/textproto/mod.ts";
-import * as bytes from "https://deno.land/std@0.108.0/bytes/mod.ts";
+} from "https://deno.land/std@0.113.0/testing/asserts.ts";
+import { TextProtoReader } from "https://deno.land/std@0.113.0/textproto/mod.ts";
+import * as bytes from "https://deno.land/std@0.113.0/bytes/mod.ts";
 import {
   acceptable,
   acceptWebSocket,
@@ -20,10 +23,10 @@ import {
   unmask,
   writeFrame,
 } from "./mod.ts";
-import { delay } from "https://deno.land/std@0.108.0/async/delay.ts";
-import { serve } from "https://deno.land/std@0.108.0/http/server_legacy.ts";
-import { deferred } from "https://deno.land/std@0.108.0/async/deferred.ts";
-import { Buffer } from "https://deno.land/std@0.108.0/io/buffer.ts";
+import { delay } from "https://deno.land/std@0.113.0/async/delay.ts";
+import { serve } from "https://deno.land/std@0.113.0/http/server_legacy.ts";
+import { deferred } from "https://deno.land/std@0.113.0/async/deferred.ts";
+import { Buffer } from "https://deno.land/std@0.113.0/io/buffer.ts";
 
 Deno.test("[ws] read unmasked text frame", async () => {
   // unmasked single text frame with payload "Hello"

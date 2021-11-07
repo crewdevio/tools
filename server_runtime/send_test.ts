@@ -330,7 +330,7 @@ test({
     );
     context.response.destroy();
   },
-  ignore: true
+  ignore: true,
 });
 
 test({

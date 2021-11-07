@@ -347,7 +347,7 @@ test({
     assert(called);
     teardown();
   },
-  ignore: true
+  ignore: true,
 });
 
 test({

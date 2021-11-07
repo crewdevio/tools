@@ -131,7 +131,6 @@ export interface ApplicationOptions<S> {
    *   // evt.error will contain what error was thrown
    * });
    * ```
-   *
    */
   logErrors?: boolean;
 
