@@ -1,10 +1,10 @@
-import type { BuildOptions } from "https://deno.land/x/esbuild@v0.12.14/mod.d.ts";
+import type { BuildOptions } from "https://deno.land/x/esbuild@v0.13.12/mod.d.ts";
 import type { FilterPattern, Plugin } from "../../mod.ts";
 import {
   build,
   formatMessages,
   stop,
-} from "https://deno.land/x/esbuild@v0.12.14/mod.js";
+} from "https://deno.land/x/esbuild@v0.13.12/mod.js";
 import { denoPlugin } from "https://deno.land/x/esbuild_deno_loader@0.1.1/mod.ts";
 import { createFilter } from "../../src/rollup/createFilter.ts";
 

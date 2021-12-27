@@ -1,8 +1,0 @@
-# IDE
-.vscode
-
-# macOS files
-.DS_Store
-
-# test cache
-cache

@@ -14,7 +14,7 @@ export {
   resolve,
   sep,
   toFileUrl,
-} from "https://deno.land/std@0.106.0/path/mod.ts";
+} from "https://deno.land/std@0.113.0/path/mod.ts";
 export {
   bold,
   cyan,
@@ -22,8 +22,8 @@ export {
   green,
   red,
   underline,
-} from "https://deno.land/std@0.106.0/fmt/colors.ts";
-export { EventEmitter } from "https://deno.land/std@0.106.0/node/events.ts";
+} from "https://deno.land/std@0.113.0/fmt/colors.ts";
+export { EventEmitter } from "https://deno.land/std@0.113.0/node/events.ts";
 
 /**
  * Rollup
@@ -33,8 +33,9 @@ export { EventEmitter } from "https://deno.land/std@0.106.0/node/events.ts";
 export {
   rollup,
   VERSION,
-} from "https://unpkg.com/rollup@2.52.7/dist/es/rollup.browser.js";
+} from "https://unpkg.com/rollup@2.58.0/dist/es/rollup.browser.js";
 export type {
+  AcornNode,
   AddonHook,
   AddonHookFunction,
   AmdOptions,
@@ -54,8 +55,11 @@ export type {
   ExternalOption,
   FilePlaceholder,
   FirstPluginHooks,
+  GeneratedCodeOptions,
+  GeneratedCodePreset,
   GetInterop,
   GetManualChunk,
+  GetManualChunkApi,
   GetModuleInfo,
   GlobalsOption,
   HasModuleSideEffects,
@@ -66,14 +70,18 @@ export type {
   IsExternal,
   IsPureModule,
   LoadHook,
+  LoadResult,
   ManualChunksOption,
   MergedRollupOptions,
   MinimalPluginContext,
   ModuleFormat,
+  ModuleInfo,
   ModuleJSON,
+  ModuleOptions,
   ModuleParsedHook,
   ModuleSideEffectsOption,
   NormalizedAmdOptions,
+  NormalizedGeneratedCodeOptions,
   NormalizedInputOptions,
   NormalizedOutputOptions,
   NormalizedTreeshakingOptions,
@@ -84,7 +92,11 @@ export type {
   OutputChunk,
   OutputOptions,
   OutputPlugin,
+  OutputPluginHooks,
+  OutputPluginValueHooks,
   ParallelPluginHooks,
+  PartialNull,
+  PartialResolvedId,
   Plugin,
   PluginCache,
   PluginContext,
@@ -114,7 +126,9 @@ export type {
   RollupOptions,
   RollupOutput,
   RollupWarning,
+  RollupWatcher,
   RollupWatcherEvent,
+  RollupWatchOptions,
   SequentialPluginHooks,
   SerializablePluginCache,
   SerializedTimings,
@@ -129,10 +143,13 @@ export type {
   TransformPluginContext,
   TransformResult,
   TreeshakingOptions,
+  TreeshakingPreset,
+  TypedEventEmitter,
   WarningHandler,
   WarningHandlerWithDefault,
   WatchChangeHook,
-} from "https://unpkg.com/rollup@2.52.7/dist/rollup.d.ts";
+  WatcherOptions,
+} from "https://unpkg.com/rollup@2.58.0/dist/rollup.d.ts";
 
 /**
  * deno.land/x
