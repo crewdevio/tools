@@ -3,22 +3,22 @@ import {
   readLong,
   readShort,
   sliceLongToBytes,
-} from "https://deno.land/std@0.117.0/io/ioutil.ts";
+} from "https://deno.land/std@0.119.0/io/ioutil.ts";
 import {
   BufReader,
   BufWriter,
-} from "https://deno.land/std@0.117.0/io/buffer.ts";
-import * as base64 from "https://deno.land/std@0.117.0/encoding/base64.ts";
-import { crypto } from "https://deno.land/std@0.117.0/crypto/mod.ts";
+} from "https://deno.land/std@0.119.0/io/buffer.ts";
+import * as base64 from "https://deno.land/std@0.119.0/encoding/base64.ts";
+import { crypto } from "https://deno.land/std@0.119.0/crypto/mod.ts";
 
 import {
   Deferred,
   deferred,
-} from "https://deno.land/std@0.117.0/async/deferred.ts";
-import { TextProtoReader } from "https://deno.land/std@0.117.0/textproto/mod.ts";
-import { writeResponse } from "https://deno.land/std@0.117.0/http/_io.ts";
-import { assert } from "https://deno.land/std@0.117.0/_util/assert.ts";
-import { concat } from "https://deno.land/std@0.117.0/bytes/mod.ts";
+} from "https://deno.land/std@0.119.0/async/deferred.ts";
+import { TextProtoReader } from "https://deno.land/std@0.119.0/textproto/mod.ts";
+import { assert } from "https://deno.land/std@0.119.0/_util/assert.ts";
+import { concat } from "https://deno.land/std@0.119.0/bytes/mod.ts";
+import { writeResponse } from "../server/_io.ts";
 
 const { hasOwn } = Object;
 export enum OpCode {
@@ -44,7 +44,7 @@ export interface WebSocketCloseEvent {
 
 /** Returns true if input value is a WebSocketCloseEvent, false otherwise. */
 export function isWebSocketCloseEvent(
-  a: WebSocketEvent
+  a: WebSocketEvent,
 ): a is WebSocketCloseEvent {
   // deno-lint-ignore ban-types
   return hasOwn(a as object, "code");
@@ -54,7 +54,7 @@ export type WebSocketPingEvent = ["ping", Uint8Array];
 
 /** Returns true if input value is a WebSocketPingEvent, false otherwise. */
 export function isWebSocketPingEvent(
-  a: WebSocketEvent
+  a: WebSocketEvent,
 ): a is WebSocketPingEvent {
   return Array.isArray(a) && a[0] === "ping" && a[1] instanceof Uint8Array;
 }
@@ -63,7 +63,7 @@ export type WebSocketPongEvent = ["pong", Uint8Array];
 
 /** Returns true if input value is a WebSocketPongEvent, false otherwise. */
 export function isWebSocketPongEvent(
-  a: WebSocketEvent
+  a: WebSocketEvent,
 ): a is WebSocketPongEvent {
   return Array.isArray(a) && a[0] === "pong" && a[1] instanceof Uint8Array;
 }
@@ -124,7 +124,7 @@ export async function writeFrame(frame: WebSocketFrame, writer: Deno.Writer) {
   const hasMask = frame.mask ? 0x80 : 0;
   if (frame.mask && frame.mask.byteLength !== 4) {
     throw new Error(
-      "invalid mask. mask must be 4 bytes: length=" + frame.mask.byteLength
+      "invalid mask. mask must be 4 bytes: length=" + frame.mask.byteLength,
     );
   }
   if (payloadLength < 126) {
@@ -271,7 +271,7 @@ class WebSocketImpl implements WebSocket {
           // [0x12, 0x34] -> 0x1234
           const code = (frame.payload[0] << 8) | frame.payload[1];
           const reason = decoder.decode(
-            frame.payload.subarray(2, frame.payload.length)
+            frame.payload.subarray(2, frame.payload.length),
           );
           await this.close(code, reason);
           yield { code, reason };
@@ -320,10 +320,12 @@ class WebSocketImpl implements WebSocket {
   }
 
   send(data: WebSocketMessage): Promise<void> {
-    const opcode =
-      typeof data === "string" ? OpCode.TextFrame : OpCode.BinaryFrame;
-    const payload =
-      typeof data === "string" ? new TextEncoder().encode(data) : data;
+    const opcode = typeof data === "string"
+      ? OpCode.TextFrame
+      : OpCode.BinaryFrame;
+    const payload = typeof data === "string"
+      ? new TextEncoder().encode(data)
+      : data;
     const isLastFrame = true;
     const frame = {
       isLastFrame,
@@ -335,8 +337,9 @@ class WebSocketImpl implements WebSocket {
   }
 
   ping(data: WebSocketMessage = ""): Promise<void> {
-    const payload =
-      typeof data === "string" ? new TextEncoder().encode(data) : data;
+    const payload = typeof data === "string"
+      ? new TextEncoder().encode(data)
+      : data;
     const frame = {
       isLastFrame: true,
       opcode: OpCode.Ping,
@@ -392,7 +395,7 @@ class WebSocketImpl implements WebSocket {
       this.sendQueue = [];
       rest.forEach((e) =>
         e.d.reject(
-          new Deno.errors.ConnectionReset("Socket has already been closed")
+          new Deno.errors.ConnectionReset("Socket has already been closed"),
         )
       );
     }
@@ -418,7 +421,7 @@ const kGUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 /** Create value of Sec-WebSocket-Accept header from inputted nonce. */
 export function createSecAccept(nonce: string): string {
   return base64.encode(
-    crypto.subtle.digestSync("SHA-1", new TextEncoder().encode(nonce + kGUID))
+    crypto.subtle.digestSync("SHA-1", new TextEncoder().encode(nonce + kGUID)),
   );
 }
 
@@ -475,7 +478,7 @@ export async function handshake(
   url: URL,
   headers: Headers,
   bufReader: BufReader,
-  bufWriter: BufWriter
+  bufWriter: BufWriter,
 ) {
   const { hostname, pathname, search } = url;
   const key = createSecKey();
@@ -512,7 +515,7 @@ export async function handshake(
   if (version !== "HTTP/1.1" || statusCode !== "101") {
     throw new Error(
       `ws: server didn't accept handshake: ` +
-        `version=${version}, statusCode=${statusCode}`
+        `version=${version}, statusCode=${statusCode}`,
     );
   }
 
@@ -526,7 +529,7 @@ export async function handshake(
   if (secAccept !== expectedSecAccept) {
     throw new Error(
       `ws: unexpected sec-websocket-accept header: ` +
-        `expected=${expectedSecAccept}, actual=${secAccept}`
+        `expected=${expectedSecAccept}, actual=${secAccept}`,
     );
   }
 }
