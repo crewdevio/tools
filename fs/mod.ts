@@ -1,2 +1,2 @@
 export * from "./exist.ts";
-export * from "./mod.ts";
+export * from "./json.ts";
